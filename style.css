@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    padding: 10px;
+  }
+  
+  .container {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 350px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .container h1 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+  
+  .weather input {
+    padding: 12px;
+    width: 85%;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.8);
+  }
+  
+  .weather button {
+    padding: 10px;
+    width: 90%;
+    margin-top: 10px;
+    border: none;
+    background: #4f94d4;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: background 0.3s;
+  }
+  
+  .weather button:hover {
+    background: #3b7ab8;
+  }
+  
+  #result {
+    margin-top: 20px;
+  }
+  
+  #result h2 {
+    font-size: 1.6em;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+  
+  .icon-and-temp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  #icon {
+    width: 80px;
+    height: 80px;
+  }
+  
+  #temperature {
+    font-size: 1.4em;
+    color: #ffffff;
+  }
+  
+  #condition {
+    font-size: 1.1em;
+    color: #cce4f6;
+  }
+
+  .unit-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0;
+    color: #ffffff;
+  }
+  
+  .unit-toggle label {
+    cursor: pointer;
+  }
+  
+  .unit-toggle input {
+    margin-right: 5px;
+  }
+  
+  
+  /* Media Query untuk layar kecil */
+  @media (max-width: 600px) {
+    .container {
+      padding: 15px;
+      width: 90%;
+    }
+  
+    .container h1 {
+      font-size: 1.5em;
+    }
+  
+    #result h2 {
+      font-size: 1.4em;
+    }
+  
+    #icon {
+      width: 60px;
+      height: 60px;
+    }
+  
+    #temperature {
+      font-size: 1.2em;
+    }
+  
+    #condition {
+      font-size: 1em;
+    }
+  }
+  
+  /* Media Query untuk layar yang sangat kecil */
+  @media (max-width: 400px) {
+    .container h1 {
+      font-size: 1.3em;
+    }
+  
+    .weather input {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .weather button {
+      padding: 8px;
+      width: 100%;
+    }
+  
+    #result h2 {
+      font-size: 1.2em;
+    }
+  
+    #icon {
+      width: 50px;
+      height: 50px;
+    }
+  
+    #temperature {
+      font-size: 1em;
+    }
+  
+    #condition {
+      font-size: 0.9em;
+    }
+  }
+  

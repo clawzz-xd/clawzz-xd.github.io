@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dukun Cuaca</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Pawang Cuaca ADN</h1>
+    <div class="weather">
+      <input type="text" id="city" placeholder="Masukan Nama Kota">
+      <div class="unit-toggle">
+        <label>
+          <input type="radio" name="unit" value="C" checked> °C
+        </label>
+        <label>
+          <input type="radio" name="unit" value="F"> °F
+        </label>
+      </div>
+      <button onclick="getWeather()">Gass Cek</button>
+      <div id="result">
+        <h2 id="location"></h2>
+        <div class="icon-and-temp">
+          <img id="icon" src="" alt="Weather Icon" style="display: none;">
+          <p id="temperature"></p>
+        </div>
+        <p id="condition"></p>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
