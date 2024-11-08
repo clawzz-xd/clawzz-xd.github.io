@@ -4,7 +4,7 @@ async function getWeather() {
   const unit = document.querySelector('input[name="unit"]:checked').value; // Mendapatkan unit yang dipilih
 
   if (!city) {
-    alert("Please enter a city name");
+    alert("Masukan Nama Kota");
     return;
   }
 
