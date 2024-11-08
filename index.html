@@ -3,15 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Dimas</title>
+  <title>Realtime Weather</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>CUACA REALTIME</h1>
+    <h1>Weather in Your City</h1>
     <div class="weather">
-      <input type="text" id="city" placeholder="Masukan Nama Kota/Negara">
-      <button onclick="getWeather()">gas cek</button>
+      <input type="text" id="city" placeholder="Enter city name">
+      <div class="unit-toggle">
+        <label>
+          <input type="radio" name="unit" value="C" checked> °C
+        </label>
+        <label>
+          <input type="radio" name="unit" value="F"> °F
+        </label>
+      </div>
+      <button onclick="getWeather()">Check Weather</button>
       <div id="result">
         <h2 id="location"></h2>
         <div class="icon-and-temp">
