@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Loop with Keycode</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    #keycodeForm {
+      display: none;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    #keycodeForm input {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    #keycodeForm button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #keycodeForm button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <script>
+    let loopActive = true;
+
+    // Fungsi untuk membuka laman web terus-menerus
+    function openWebLoop() {
+      if (loopActive) {
+        window.open("http://smkn11malang.sch.id/old/", "_blank");
+        setTimeout(openWebLoop, 1000); // Interval membuka laman setiap 1 detik
+      }
+    }
+
+    // Fungsi untuk memvalidasi keycode dan menghentikan loop
+    function validateKeycode() {
+      const inputKeycode = document.getElementById("keycodeInput").value;
+      const correctKeycode = "12345"; // Ganti dengan keycode yang diinginkan
+
+      if (inputKeycode === correctKeycode) {
+        loopActive = false;
+        alert("Loop stopped successfully.");
+        document.getElementById("keycodeForm").style.display = "none";
+      } else {
+        alert("Incorrect keycode. The loop will continue.");
+      }
+    }
+
+    // Tampilkan form input keycode
+    function showKeycodeForm() {
+      document.getElementById("keycodeForm").style.display = "block";
+    }
+
+    // Memulai loop saat laman dimuat
+    window.onload = function () {
+      openWebLoop();
+    };
+  </script>
+</head>
+<body>
+  <div id="keycodeForm">
+    <h2>Enter Keycode</h2>
+    <input type="text" id="keycodeInput" placeholder="Enter keycode here">
+    <button onclick="validateKeycode()">Submit</button>
+  </div>
+  <script>
+    // Tambahkan event listener untuk membuka form input saat tombol Escape ditekan
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        showKeycodeForm();
+      }
+    });
+  </script>
+</body>
+</html>
