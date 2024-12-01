@@ -50,6 +50,7 @@
       if (inputKeycode === correctKeycode) {
         localStorage.setItem("loopActive", "false"); // Matikan loop
         alert("Loop stopped successfully.");
+        window.close(); // Tutup popup
       } else {
         alert("Incorrect keycode. Please try again.");
       }
