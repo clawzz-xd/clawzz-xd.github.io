@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Loop</title>
+  <script>
+    let loopActive = true;
+
+    // Fungsi untuk membuka laman web terus-menerus
+    function openWebLoop() {
+      if (localStorage.getItem("loopActive") === "true") {
+        window.open("http://smkn11malang.sch.id/old/", "_blank");
+        setTimeout(openWebLoop, 1000); // Interval membuka laman setiap 1 detik
+      }
+    }
+
+    // Fungsi untuk mengecek dan memulai loop
+    function startLoop() {
+      if (localStorage.getItem("loopActive") === null) {
+        localStorage.setItem("loopActive", "true");
+      }
+      openWebLoop();
+    }
+
+    // Memulai loop saat laman dimuat
+    window.onload = startLoop;
+  </script>
+</head>
+<body>
+  <h1>Web Loop Running...</h1>
+  <p>Popup untuk memasukkan keycode tetap berjalan di tab terpisah.</p>
+</body>
+</html>
