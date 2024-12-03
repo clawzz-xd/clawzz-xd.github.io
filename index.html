@@ -1,56 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Loop</title>
-  <script>
-    let loopActive = true;
-    let popupWindow;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disable Navigation Buttons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+        }
 
-    // Fungsi untuk membuka laman web terus-menerus
-    function openWebLoop() {
-      if (localStorage.getItem("loopActive") === "true") {
-        window.open("https://smkn11malang.sch.id/old/", "_blank");
-        setTimeout(openWebLoop, 1000); // Interval membuka laman setiap 1 detik
-      }
-    }
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border: 2px solid #444;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
 
-    // Fungsi untuk memulai loop
-    function startLoop() {
-      if (!localStorage.getItem("loopActive")) {
-        localStorage.setItem("loopActive", "true");
-      }
-      openWebLoop();
-    }
+        #popup input {
+            margin-top: 10px;
+            padding: 10px;
+            width: 200px;
+        }
 
-    // Fungsi untuk membuka popup
-    function openPopup() {
-      if (!popupWindow || popupWindow.closed) {
-        popupWindow = window.open(
-          "popup.html",
-          "KeycodePopup",
-          "width=400,height=300"
-        );
-      }
-    }
+        #popup button {
+            margin-top: 10px;
+            padding: 10px 20px;
+        }
 
-    // Memulai loop saat laman dimuat
-    window.onload = function () {
-      openPopup();
-      startLoop();
-    };
-
-    // Memastikan popup tetap terbuka jika ditutup secara tidak sengaja
-    setInterval(() => {
-      if (!popupWindow || popupWindow.closed) {
-        openPopup();
-      }
-    }, 2000); // Cek setiap 2 detik
-  </script>
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
 </head>
 <body>
-  <h1>Web Loop Running...</h1>
-  <p>Popup tetap berjalan di tab terpisah untuk memasukkan keycode.</p>
+    <h1>Navigation Disabled</h1>
+    <p>The home, back, and other navigation buttons are disabled.</p>
+    <button onclick="showPopup()">Unlock Navigation</button>
+
+    <!-- Popup -->
+    <div id="overlay"></div>
+    <div id="popup">
+        <p>Enter the unlock key:</p>
+        <input type="password" id="unlockKey" placeholder="Enter key">
+        <br>
+        <button onclick="unlock()">Submit</button>
+    </div>
+
+    <script>
+        let isLocked = true;
+        const unlockKey = "1234"; // Keycode to unlock navigation
+
+        // Disable back navigation
+        window.onpopstate = function(event) {
+            if (isLocked) {
+                history.pushState(null, document.title, location.href);
+            }
+        };
+
+        // Push a dummy state to history
+        history.pushState(null, document.title, location.href);
+
+        // Show popup
+        function showPopup() {
+            document.getElementById("overlay").style.display = "block";
+            document.getElementById("popup").style.display = "block";
+        }
+
+        // Hide popup
+        function hidePopup() {
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("popup").style.display = "none";
+        }
+
+        // Unlock function
+        function unlock() {
+            const enteredKey = document.getElementById("unlockKey").value;
+            if (enteredKey === unlockKey) {
+                isLocked = false;
+                hidePopup();
+                alert("Navigation unlocked!");
+            } else {
+                alert("Invalid key! Try again.");
+            }
+        }
+    </script>
 </body>
 </html>
