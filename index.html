@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disable Navigation Buttons</title>
+    <title>Lock Navigation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            padding-top: 100px;
+            background-color: #f4f4f4;
+            padding-top: 50px;
         }
 
         #popup {
@@ -45,12 +46,26 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
+
+        #lock-button {
+            padding: 15px 25px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #lock-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <h1>Navigation Disabled</h1>
-    <p>The home, back, and other navigation buttons are disabled.</p>
-    <button onclick="showPopup()">Unlock Navigation</button>
+    <h1>Locked Navigation</h1>
+    <p>Press the button below to lock the screen. Enter the keycode to unlock.</p>
+    <button id="lock-button" onclick="lockScreen()">Lock Navigation</button>
 
     <!-- Popup -->
     <div id="overlay"></div>
@@ -62,20 +77,48 @@
     </div>
 
     <script>
-        let isLocked = true;
+        let isLocked = false;
         const unlockKey = "1234"; // Keycode to unlock navigation
 
-        // Disable back navigation
-        window.onpopstate = function(event) {
-            if (isLocked) {
-                history.pushState(null, document.title, location.href);
+        // Lock the screen into fullscreen mode
+        function lockScreen() {
+            isLocked = true;
+
+            // Enter fullscreen mode
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem.msRequestFullscreen();
             }
-        };
 
-        // Push a dummy state to history
-        history.pushState(null, document.title, location.href);
+            // Push dummy state to prevent back navigation
+            history.pushState(null, "", location.href);
+            window.onpopstate = function () {
+                if (isLocked) {
+                    history.pushState(null, "", location.href);
+                }
+            };
 
-        // Show popup
+            // Disable navigation buttons programmatically
+            document.addEventListener("keydown", preventKeys);
+        }
+
+        // Prevent certain keys (like Backspace, Alt+Tab, etc.)
+        function preventKeys(event) {
+            if (isLocked) {
+                const forbiddenKeys = ["Backspace", "Alt", "Tab"];
+                if (forbiddenKeys.includes(event.key) || event.altKey || event.ctrlKey) {
+                    event.preventDefault();
+                }
+            }
+        }
+
+        // Show popup for unlocking
         function showPopup() {
             document.getElementById("overlay").style.display = "block";
             document.getElementById("popup").style.display = "block";
@@ -92,6 +135,21 @@
             const enteredKey = document.getElementById("unlockKey").value;
             if (enteredKey === unlockKey) {
                 isLocked = false;
+
+                // Exit fullscreen mode
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) { /* Firefox */
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) { /* IE/Edge */
+                    document.msExitFullscreen();
+                }
+
+                // Remove keydown listener
+                document.removeEventListener("keydown", preventKeys);
+
                 hidePopup();
                 alert("Navigation unlocked!");
             } else {
